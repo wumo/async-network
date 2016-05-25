@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>lab.mars</groupId>
+    <artifactId>async-network</artifactId>
+    <version>4.0.0</version>
+    <packaging>bundle</packaging>
+
+    <properties>
+        <netty.version>4.0.30.Final</netty.version>
+        <asyncstream.version>4.0.0</asyncstream.version>
+        <jmh.version>1.12</jmh.version>
+        <junit.version>4.12</junit.version>
+        <slf4j.version>1.7.21</slf4j.version>
+        <logback.version>1.1.7</logback.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.assembly.plugin.version>2.4.1</maven.assembly.plugin.version>
+        <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
+        <maven.source.plugin.version>3.0.0</maven.source.plugin.version>
+        <maven-bundle-plugin.version>3.0.1</maven-bundle-plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec-http</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>lab.mars</groupId>
+            <artifactId>asyncstream</artifactId>
+            <version>${asyncstream.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.source.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${maven-bundle-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Export-Package>
+                            lab.mars.util.network
+                        </Export-Package>
+                        <Import-Package>
+                            io.netty.channel,
+                            lab.mars.util.async,
+                            io.netty.bootstrap,
+                            io.netty.buffer,
+                            io.netty.channel.socket.nio,
+                            io.netty.handler.codec.http,
+                            io.netty.handler.ssl,
+                            io.netty.util,
+                            javax.net.ssl,
+                            io.netty.channel.nio,
+                            io.netty.channel.socket,
+                            io.netty.handler.codec,
+                            org.slf4j,
+                            io.netty.util.concurrent
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>deployment</id>
+            <url>http://192.168.10.203:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>deployment</id>
+            <url>http://192.168.10.203:8081/nexus/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
+</project>
