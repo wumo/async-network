@@ -28,12 +28,12 @@ public class TestNetwork {
     public void testHttp() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
         HttpServer server = new HttpServer();
-        server.enableHttps(true);
+//        server.enableHttps(true);
         server.bindAsync("localhost", 8080)
               .<ChannelFuture>then(future -> {
                   Assert.assertTrue(future.isSuccess());
                   HttpClient client = new HttpClient();
-                  client.enableHttps(true);
+//                  client.enableHttps(true);
                   client.connectAsync("localhost", 8080)
                         .<ChannelFuture>then(future2 -> {
                             Assert.assertTrue(future2.isSuccess());
